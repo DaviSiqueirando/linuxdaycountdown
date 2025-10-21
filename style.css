@@ -1,87 +1,122 @@
 
 body {
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  background: linear-gradient(181deg, #ffffff, #e9edfd);
+  background-size: 400% 400%;
+  animation: gradientMove 7s ease infinite;
+  margin: 0;
+  padding: 0;
+  color: #fff;
 }
 
+@keyframes gradientMove {
+  0% { background-position: 42% 24%; }
+  50% { background-position: 59% 100%; }
+  100% { background-position: 42% 0%; }
+}
+
+/*  FONTES */
 .montserrat-1 {
-    font-family: "Montserrat", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  .dela-gothic-one-regular {
-    font-family: "Dela Gothic One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-
-.fonte2{
-    font-family: "Dela Gothic One";
-    font-weight: 200;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
-.container {
-    text-align: center;
+
+.dela-gothic-one-regular {
+  font-family: "Dela Gothic One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
+
+.fonte2 {
+  font-family: "Dela Gothic One", sans-serif;
+  font-weight: 300;
+}
+
+/*  ELEMENTOS*/
+h1, h2 {
+font-family: 'Montserrat';
+  color: #fff;
+}
+
 h1 {
-    font-family: 'Montserrat';
-    font-size: 3rem;
+  font-size: 3rem;
 }
+
 .countdown {
-    font-size: 2.5rem;
-    margin-top: 20px;
-
+  font-size: 2rem;
+  margin-top: 20px;
 }
 
-.zoom:hover{
-    transform: scale(1.1);
-    transition: 0.5s ease-in-out;
+.zoom {
+  transition: transform 0.4s ease-in-out;
 }
 
-:root{
-    --dark-background-color: #000000;
-    --white-color: #ffffff;
+.zoom:hover {
+  transform: scale(1.08);
 }
 
-body{
-    background-color: var(--dark-background-color);
-    transition: .5s;
+/* Cores */
+:root {
+  --dark-background-color: #000;
+  --white-color: #fff;
 }
 
-h1, h2, h3, h4, h5, h6{
-    color: var(--white-color);
+/* Imgs */
+img {
+  max-width: 100%;
+  height: auto;
 }
 
-linuxfoto{
-    height: 200px;
-    width: 200px;
+.linuxfoto {
+  height: 200px;
+  width: 200px;
 }
 
-.css-selector {
-    background: linear-gradient(181deg, #ffffff, #bac2ff);
-    background-size: 400% 400%;
-
-    -webkit-animation: AnimationName 0s ease infinite;
-    -moz-animation: AnimationName 0s ease infinite;
-    animation: AnimationName 0s ease infinite;
+/* Containers */
+.container, .container-fluid {
+  text-align: center;
+  padding: 1rem;
 }
 
-@-webkit-keyframes AnimationName {
-    0%{background-position:42% 0%}
-    50%{background-position:59% 100%}
-    100%{background-position:42% 0%}
+/* Medidas Mobile */
+@media (max-width: 992px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .countdown {
+    font-size: 1.5rem;
+  }
+
+  .fonte2 h1,
+  .fonte2 h2,
+  .fonte2 h3 {
+    font-size: 1.3rem;
+  }
+
+  img {
+    max-width: 90%;
+  }
 }
-@-moz-keyframes AnimationName {
-    0%{background-position:42% 0%}
-    50%{background-position:59% 100%}
-    100%{background-position:42% 0%}
-}
-@keyframes AnimationName {
-    0%{background-position:42% 0%}
-    50%{background-position:59% 100%}
-    100%{background-position:42% 0%}
+
+/* Mobile */
+@media (max-width: 576px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .countdown {
+    font-size: 1.2rem;
+  }
+
+  .fonte2 h1 {
+    font-size: 1rem;
+  }
+
+  .fonte2 img {
+    max-width: 100%;
+    height: auto;
+  }
 }
