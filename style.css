@@ -7,7 +7,7 @@ body {
   animation: gradientMove 7s ease infinite;
   margin: 0;
   padding: 0;
-  color: #fff;
+  color: var(--ink-color);
 }
 
 @keyframes gradientMove {
@@ -36,8 +36,9 @@ body {
 
 /*  ELEMENTOS*/
 h1, h2 {
-font-family: 'Montserrat';
-  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--ink-color);
+  letter-spacing: -0.01em;
 }
 
 h1 {
@@ -46,6 +47,8 @@ h1 {
 
 .countdown {
   font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink-color);
   margin-top: 20px;
 }
 
@@ -57,10 +60,61 @@ h1 {
   transform: scale(1.08);
 }
 
+.dia-card.zoom:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
 /* Cores */
 :root {
   --dark-background-color: #000;
   --white-color: #fff;
+  --ink-color: #16181d;
+  --muted-color: #4a5060;
+  --brand-color: rgb(236, 201, 0);
+  --card-border-color: rgba(22, 24, 29, 0.08);
+}
+
+/* Programacao (dias do evento) */
+.dia-card {
+  background: var(--white-color);
+  border: 1px solid var(--card-border-color);
+  border-top: 4px solid var(--brand-color);
+  border-radius: 14px;
+  padding: 1.75rem 1.5rem;
+  text-align: left;
+  box-shadow: 0 8px 24px rgba(22, 24, 29, 0.06);
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+.dia-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(22, 24, 29, 0.1);
+}
+
+.dia-data {
+  display: inline-block;
+  font-family: "Dela Gothic One", sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink-color);
+  background: var(--brand-color);
+  border-radius: 999px;
+  padding: 0.25rem 0.85rem;
+  margin-bottom: 0.9rem;
+}
+
+.dia-titulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink-color);
+  margin-bottom: 0.5rem;
+}
+
+.dia-descricao {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--muted-color);
+  margin-bottom: 0;
 }
 
 /* Imgs */
@@ -118,5 +172,13 @@ img {
   .fonte2 img {
     max-width: 100%;
     height: auto;
+  }
+
+  .dia-card {
+    padding: 1.4rem 1.2rem;
+  }
+
+  .dia-titulo {
+    font-size: 1.25rem;
   }
 }
