@@ -67,49 +67,109 @@
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-10">
 
-        <h1 class="display-5 fw-semibold textreveal zoom mb-3 .smooth">
+        <h1 class="display-5 fw-semibold textreveal zoom mb-3">
           Linux Day está <span class="brand-text">chegando!</span>
         </h1>
 
         <h2 class="display-6 mb-4">
-          Contagem Regressiva para <span class="brand-text">27 de Outubro de 2025</span>
+          Contagem Regressiva para <span class="brand-text" id="periodo-evento">26 a 28 de Outubro</span>
         </h2>
 
         <div id="countdown" class="countdown display-6 temporizador py-3"></div>
 
+      </div>
+    </div>
+
+    <!-- Programação: 3 dias de evento -->
+    <div class="row justify-content-center g-4 mt-2 mb-4" id="programacao">
+      <div class="col-lg-4 col-md-6">
+        <article class="dia-card zoom h-100">
+          <span class="dia-data">26/10</span>
+          <h3 class="dia-titulo">Linux Day</h3>
+          <p class="dia-descricao">Exposição de empresas e palestras abertas sobre o ecossistema open source.</p>
+        </article>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <article class="dia-card zoom h-100">
+          <span class="dia-data">27/10</span>
+          <h3 class="dia-titulo">Palestras</h3>
+          <p class="dia-descricao">Palestras com convidados do mercado e continuação da exposição de empresas.</p>
+        </article>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <article class="dia-card zoom h-100">
+          <span class="dia-data">28/10</span>
+          <h3 class="dia-titulo">Investidores</h3>
+          <p class="dia-descricao">Exposição de empresas e apresentação dos projetos de alunos formandos para investidores.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
         <div class="py-4 fonte2 text-primary">
-          <a href="https://forms.gle/MoTtJ7zYirFecTQA8" target="_blank" class="text-decoration-none text-primary">
+          <a href="https://forms.gle/MoTtJ7zYirFecTQA8" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-primary">
             <h3 class="mb-3">Mostre seu apoio e adquira já sua camiseta da edição atual! Clique aqui!</h3>
             <img class="img-fluid rounded shadow zoom" style="max-width: 300px;" src="img/Linuxdaycamiseta.jpeg" alt="Camiseta Linux Day">
           </a>
         </div>
-
       </div>
     </div>
   </section>
 
   <script>
-    function updateCountdown() {
-      const targetDate = new Date("October 27, 2025 19:30:00").getTime();
-      const now = new Date().getTime();
-      const timeRemaining = targetDate - now;
+    // Edicao anual do evento: 26 a 28 de outubro (mes 9 = outubro no Date).
+    const MES_EVENTO = 9;
+    const DIA_INICIO = 26;
+    const DIA_FIM = 28;
+    const HORA_ABERTURA = 19;
+    const MINUTO_ABERTURA = 30;
 
-      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+    const elCountdown = document.getElementById("countdown");
+    const elPeriodo = document.getElementById("periodo-evento");
 
-      document.getElementById("countdown").innerHTML = `
-        ${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos restantes.
-      `;
-
-      if (timeRemaining < 0) {
-        document.getElementById("countdown").innerHTML = "O dia chegou!";
+    // Calcula a edicao vigente: enquanto a edicao do ano corrente nao terminar,
+    // ela e o alvo; assim que o dia 28 se encerra, o alvo vira o ano seguinte.
+    function edicaoAtual(agora) {
+      const ano = new Date(agora).getFullYear();
+      for (let deslocamento = 0; deslocamento <= 1; deslocamento++) {
+        const inicio = new Date(ano + deslocamento, MES_EVENTO, DIA_INICIO, HORA_ABERTURA, MINUTO_ABERTURA, 0);
+        const fim = new Date(ano + deslocamento, MES_EVENTO, DIA_FIM, 23, 59, 59, 999);
+        if (agora <= fim.getTime()) {
+          return { inicio: inicio.getTime(), fim: fim.getTime(), ano: ano + deslocamento };
+        }
       }
     }
 
-    setInterval(updateCountdown, 1000);
+    function plural(valor, singular, plural) {
+      return `${valor} ${valor === 1 ? singular : plural}`;
+    }
+
+    function updateCountdown() {
+      const agora = Date.now();
+      const edicao = edicaoAtual(agora);
+
+      elPeriodo.textContent = `${DIA_INICIO} a ${DIA_FIM} de Outubro de ${edicao.ano}`;
+
+      const restante = edicao.inicio - agora;
+
+      if (restante <= 0) {
+        elCountdown.textContent = "O Linux Day começou! Aproveite os três dias de evento.";
+        return;
+      }
+
+      const dias = Math.floor(restante / 86400000);
+      const horas = Math.floor((restante % 86400000) / 3600000);
+      const minutos = Math.floor((restante % 3600000) / 60000);
+      const segundos = Math.floor((restante % 60000) / 1000);
+
+      elCountdown.textContent =
+        `${plural(dias, "dia", "dias")}, ${plural(horas, "hora", "horas")}, ` +
+        `${plural(minutos, "minuto", "minutos")} e ${plural(segundos, "segundo", "segundos")} restantes.`;
+    }
+
     updateCountdown();
+    setInterval(updateCountdown, 1000);
 
     ScrollReveal().reveal('.zoom', { easing: 'ease-in', duration: 800 });
     ScrollReveal().reveal('.textreveal', { delay: 300, distance: '60px', duration: 1000, reset: true });
